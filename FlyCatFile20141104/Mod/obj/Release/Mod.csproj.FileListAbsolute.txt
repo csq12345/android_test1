@@ -1,9 +1,0 @@
-E:\FlyCatFile\Mod\bin\Release\Mod.dll
-E:\FlyCatFile\Mod\bin\Release\Mod.pdb
-E:\FlyCatFile\Mod\obj\Release\ResolveAssemblyReference.cache
-E:\FlyCatFile\Mod\obj\Release\Mod.dll
-E:\FlyCatFile\Mod\obj\Release\Mod.pdb
-E:\mydata\FlyCatFile\FlyCatFile20141104\Mod\bin\Release\Mod.dll
-E:\mydata\FlyCatFile\FlyCatFile20141104\Mod\bin\Release\Mod.pdb
-E:\mydata\FlyCatFile\FlyCatFile20141104\Mod\obj\Release\Mod.dll
-E:\mydata\FlyCatFile\FlyCatFile20141104\Mod\obj\Release\Mod.pdb

@@ -1,9 +1,0 @@
-E:\FlyCatFile\ClassLibrary1\bin\Debug\CWTrack.dll
-E:\FlyCatFile\ClassLibrary1\bin\Debug\CWTrack.pdb
-E:\FlyCatFile\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
-E:\FlyCatFile\ClassLibrary1\obj\Debug\CWTrack.Resource1.resources
-E:\FlyCatFile\ClassLibrary1\obj\Debug\CWTrack.UserControl1.resources
-E:\FlyCatFile\ClassLibrary1\obj\Debug\GenerateResource.read.1.tlog
-E:\FlyCatFile\ClassLibrary1\obj\Debug\GenerateResource.write.1.tlog
-E:\FlyCatFile\ClassLibrary1\obj\Debug\CWTrack.dll
-E:\FlyCatFile\ClassLibrary1\obj\Debug\CWTrack.pdb
