@@ -1,0 +1,5 @@
+E:\FlyCatFile\Mod\bin\Debug\Mod.dll
+E:\FlyCatFile\Mod\bin\Debug\Mod.pdb
+E:\FlyCatFile\Mod\obj\Debug\ResolveAssemblyReference.cache
+E:\FlyCatFile\Mod\obj\Debug\Mod.dll
+E:\FlyCatFile\Mod\obj\Debug\Mod.pdb

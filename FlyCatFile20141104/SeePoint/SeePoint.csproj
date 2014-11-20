@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C260D553-5416-403F-81F6-5165966646A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SeePoint</RootNamespace>
+    <AssemblyName>SeePoint</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LitJson, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WindowsOPC\import\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ColorLib.cs" />
+    <Compile Include="FormRotate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRotate.Designer.cs">
+      <DependentUpon>FormRotate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormView.designer.cs">
+      <DependentUpon>FormView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewFont.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewFont.Designer.cs">
+      <DependentUpon>FormViewFont.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewPlane.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewPlane.Designer.cs">
+      <DependentUpon>FormViewPlane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewSide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewSide.Designer.cs">
+      <DependentUpon>FormViewSide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pointz.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="REC.cs" />
+    <Compile Include="FormViewPlane1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewPlane1.Designer.cs">
+      <DependentUpon>FormViewPlane1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewPlane2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewPlane2.Designer.cs">
+      <DependentUpon>FormViewPlane2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormViewFontOrSide1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormViewFontOrSide1.Designer.cs">
+      <DependentUpon>FormViewFontOrSide1.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormRotate.resx">
+      <DependentUpon>FormRotate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormView.resx">
+      <DependentUpon>FormView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewFont.resx">
+      <DependentUpon>FormViewFont.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewPlane.resx">
+      <DependentUpon>FormViewPlane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewSide.resx">
+      <DependentUpon>FormViewSide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewPlane1.resx">
+      <DependentUpon>FormViewPlane1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewPlane2.resx">
+      <DependentUpon>FormViewPlane2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormViewFontOrSide1.resx">
+      <DependentUpon>FormViewFontOrSide1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mod\Mod.csproj">
+      <Project>{B8F33AE0-1402-4CBA-9CD2-9E3C29546E18}</Project>
+      <Name>Mod</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OPCOperate\OPCOperate.csproj">
+      <Project>{DC0FAD4C-3CDE-474E-89D5-7A0C2ED8136A}</Project>
+      <Name>OPCOperate</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

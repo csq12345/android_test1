@@ -1,0 +1,11 @@
+E:\FlyCatFile\OPCOperate\bin\Release\OPCOperate.dll
+E:\FlyCatFile\OPCOperate\bin\Release\OPCOperate.pdb
+E:\FlyCatFile\OPCOperate\bin\Release\SuOPCClass.dll
+E:\FlyCatFile\OPCOperate\obj\Release\ResolveAssemblyReference.cache
+E:\FlyCatFile\OPCOperate\obj\Release\OPCOperate.dll
+E:\FlyCatFile\OPCOperate\obj\Release\OPCOperate.pdb
+E:\mydata\FlyCatFile\FlyCatFile20141104\OPCOperate\bin\Release\OPCOperate.dll
+E:\mydata\FlyCatFile\FlyCatFile20141104\OPCOperate\bin\Release\OPCOperate.pdb
+E:\mydata\FlyCatFile\FlyCatFile20141104\OPCOperate\bin\Release\SuOPCClass.dll
+E:\mydata\FlyCatFile\FlyCatFile20141104\OPCOperate\obj\Release\OPCOperate.dll
+E:\mydata\FlyCatFile\FlyCatFile20141104\OPCOperate\obj\Release\OPCOperate.pdb

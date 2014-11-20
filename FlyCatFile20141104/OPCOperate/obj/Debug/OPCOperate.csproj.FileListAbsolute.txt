@@ -1,0 +1,6 @@
+E:\FlyCatFile\OPCOperate\bin\Debug\OPCOperate.dll
+E:\FlyCatFile\OPCOperate\bin\Debug\OPCOperate.pdb
+E:\FlyCatFile\OPCOperate\bin\Debug\SuOPCClass.dll
+E:\FlyCatFile\OPCOperate\obj\Debug\ResolveAssemblyReference.cache
+E:\FlyCatFile\OPCOperate\obj\Debug\OPCOperate.dll
+E:\FlyCatFile\OPCOperate\obj\Debug\OPCOperate.pdb
