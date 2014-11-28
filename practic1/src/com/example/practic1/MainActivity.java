@@ -1,5 +1,22 @@
 package com.example.practic1;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HttpContext;
+
 import android.R.bool;
 import android.R.string;
 import android.app.Activity;
@@ -7,6 +24,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,11 +41,12 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// {SQLite
+		// /[SQLite
+
+		// /{创建数据库
 		Button createButton = (Button) findViewById(R.id.buttonCreateDB);
 		Button readButton = (Button) findViewById(R.id.buttonReadDB);
 
-		// {创建数据库
 		createButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -59,36 +78,58 @@ public class MainActivity extends Activity {
 
 			}
 		});
-		// }
+		// /}
 
-		// {读取数据库
+		// /{ 读取数据库
 		readButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-//				try {
-					Cursor cursor = sqLiteDatabase.query("t1", null, "ages=100",
-							null, null, null, null);
+				// try {
+				Cursor cursor = sqLiteDatabase.query("t1", null, "ages=100",
+						null, null, null, null);
 
-					boolean b = cursor.moveToNext();
-					if (b) {
-						int datacount = cursor.getCount();
-						Toast toast = Toast.makeText(MainActivity.this, datacount
-								+ "", Toast.LENGTH_SHORT);
-						toast.show();
-					}
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					Log.d("读取表异常", e.getMessage());
-//				}
-				
+				boolean b = cursor.moveToNext();
+				if (b) {
+					int datacount = cursor.getCount();
+					Toast toast = Toast.makeText(MainActivity.this, datacount
+							+ "", Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				// } catch (Exception e) {
+				// // TODO: handle exception
+				// Log.d("读取表异常", e.getMessage());
+				// }
+
 			}
 		});
 
-		// }
-		// }
+		// /}
+		// /]
 
+		// /[ httpclient
+		Thread thread = new Thread();
+
+		HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
+		String myUri = "http://www.baidu.com";
+
+		byte[] bytearray = new byte[4089];
+
+		HttpGet httpGet = new HttpGet(myUri);
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+
+			HttpEntity httpEntity = httpResponse.getEntity();
+			if (httpEntity != null) {
+				InputStream inputStream = httpEntity.getContent();
+				inputStream.read(bytearray);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		// /]
 	}
 
 	@Override
