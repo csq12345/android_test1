@@ -2,6 +2,11 @@ package com.example.practic1;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.URI;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -12,10 +17,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.utils.URIUtils;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EncodingUtils;
 
 import android.R.bool;
 import android.R.string;
@@ -27,6 +34,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml.Encoding;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +43,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	SQLiteDatabase sqLiteDatabase;
-
+	Button threadButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,27 +117,104 @@ public class MainActivity extends Activity {
 		// /]
 
 		// /[ httpclient
-		Thread thread = new Thread();
+		
+		
+		threadButton=(Button)findViewById(R.id.buttonThread);
+		threadButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick( View v) {
+				// TODO Auto-generated method stub
 
-		HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
-		String myUri = "http://www.baidu.com";
-
-		byte[] bytearray = new byte[4089];
-
-		HttpGet httpGet = new HttpGet(myUri);
-		try {
-			HttpResponse httpResponse = httpClient.execute(httpGet);
-
-			HttpEntity httpEntity = httpResponse.getEntity();
-			if (httpEntity != null) {
-				InputStream inputStream = httpEntity.getContent();
-				inputStream.read(bytearray);
+				Thread thread = new Thread(new Runnable() {
+					
+	
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
+						String myUri = "http://www.baidu.com";
+				
+					
+						
+						byte[] bytearray = new byte[4089];
+				
+						HttpGet httpGet = new HttpGet(myUri);
+						try {
+							URI uri2=URIUtils.createURI("http", "www.baidu.com", 80, "", "", "");
+							HttpResponse httpResponse = httpClient.execute(httpGet);
+				
+							HttpEntity httpEntity = httpResponse.getEntity();
+							if (httpEntity != null) {
+								InputStream inputStream = httpEntity.getContent();
+								inputStream.read(bytearray);
+								
+								inputStream.close();
+								
+							String webdata=	EncodingUtils.getString(bytearray, "utf-8");
+							
+						System.out.println(webdata);
+					
+						threadButton.setText("执行完成");
+						
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+							Log.d("httpclient", e.getMessage());
+							
+						}
+					}
+				});
+		//
+				thread.start();
+			
+			
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		});
+		
+		
+//		HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
+//		String myUri = "http://www.baidu.com";
+//
+//	
+//		
+//		byte[] bytearray = new byte[4089];
+//
+//		HttpGet httpGet = new HttpGet(myUri);
+//		try {
+//			URI uri2=URIUtils.createURI("http", "www.baidu.com", 80, "", "", "");
+//			HttpResponse httpResponse = httpClient.execute(httpGet);
+//
+//			HttpEntity httpEntity = httpResponse.getEntity();
+//			if (httpEntity != null) {
+//				InputStream inputStream = httpEntity.getContent();
+//				inputStream.read(bytearray);
+//				
+//				inputStream.close();
+//				
+//			String webdata=	EncodingUtils.getString(bytearray, "gbk");
+//			
+//			Toast toast=Toast.makeText(MainActivity.this, webdata, Toast.LENGTH_SHORT);
+//			toast.show();
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			Log.d("httpclient", e.getMessage());
+//			thread.start();
+//		}
+	
 
 		// /]
+		
+		
+		///[ socket客户端
+		Proxy myProxy=new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 7777));
+		
+		Socket mySocket=new Socket(myProxy);
+
+		
+		///]
 	}
 
 	@Override
