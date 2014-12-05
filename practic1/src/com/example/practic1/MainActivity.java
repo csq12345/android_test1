@@ -44,6 +44,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	SQLiteDatabase sqLiteDatabase;
 	Button threadButton;
+	InputStream inputStream;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -209,10 +210,27 @@ public class MainActivity extends Activity {
 		
 		
 		///[ socket¿Í»§¶Ë
-		Proxy myProxy=new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 7777));
 		
-		Socket mySocket=new Socket(myProxy);
+		Button linkButton=(Button)findViewById(R.id.buttonLink);
+		linkButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Proxy myProxy=new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 6666));
+				
+				Socket mySocket=new Socket(myProxy);
 
+				try {
+				 inputStream=	mySocket.getInputStream();
+				 
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+				Log.e("socket", e.getMessage());
+				}
+			}
+		});
+		
 		
 		///]
 	}
