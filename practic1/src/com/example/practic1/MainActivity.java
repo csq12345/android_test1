@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.URI;
 
 import org.apache.http.HttpEntity;
@@ -18,10 +17,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIUtils;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EncodingUtils;
 
 import android.R.bool;
