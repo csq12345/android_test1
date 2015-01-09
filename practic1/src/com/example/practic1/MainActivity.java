@@ -2,10 +2,13 @@ package com.example.practic1;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Socket;
 import java.net.URI;
+
+import javax.net.SocketFactory;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -35,12 +38,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	SQLiteDatabase sqLiteDatabase;
 	Button threadButton;
 	InputStream inputStream;
+	OutputStream outputStream;
+
+	Socket clientSocket;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +56,7 @@ public class MainActivity extends Activity {
 
 		// /[SQLite
 
-		// /{创建数据库
+		// /[创建数据库
 		Button createButton = (Button) findViewById(R.id.buttonCreateDB);
 		Button readButton = (Button) findViewById(R.id.buttonReadDB);
 
@@ -83,9 +91,9 @@ public class MainActivity extends Activity {
 
 			}
 		});
-		// /}
+		// /]
 
-		// /{ 读取数据库
+		// /[ 读取数据库
 		readButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -110,125 +118,148 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		// /}
+		// /]
 		// /]
 
 		// /[ httpclient
-		
-		
-		threadButton=(Button)findViewById(R.id.buttonThread);
+
+		threadButton = (Button) findViewById(R.id.buttonThread);
 		threadButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
-			public void onClick( View v) {
+			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
 				Thread thread = new Thread(new Runnable() {
-					
-	
-					
+
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
 						HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
 						String myUri = "http://www.baidu.com";
-				
-					
-						
+
 						byte[] bytearray = new byte[4089];
-				
+
 						HttpGet httpGet = new HttpGet(myUri);
 						try {
-							URI uri2=URIUtils.createURI("http", "www.baidu.com", 80, "", "", "");
-							HttpResponse httpResponse = httpClient.execute(httpGet);
-				
+							URI uri2 = URIUtils.createURI("http",
+									"www.baidu.com", 80, "", "", "");
+							HttpResponse httpResponse = httpClient
+									.execute(httpGet);
+
 							HttpEntity httpEntity = httpResponse.getEntity();
 							if (httpEntity != null) {
-								InputStream inputStream = httpEntity.getContent();
+								InputStream inputStream = httpEntity
+										.getContent();
 								inputStream.read(bytearray);
-								
+
 								inputStream.close();
-								
-							String webdata=	EncodingUtils.getString(bytearray, "utf-8");
-							
-						System.out.println(webdata);
-					
-						threadButton.setText("执行完成");
-						
+
+								String webdata = EncodingUtils.getString(
+										bytearray, "utf-8");
+
+								System.out.println(webdata);
+
+								threadButton.setText("执行完成");
+
 							}
 						} catch (Exception e) {
 							// TODO: handle exception
 							Log.d("httpclient", e.getMessage());
-							
+
 						}
 					}
 				});
-		//
+				//
 				thread.start();
-			
-			
+
 			}
 		});
-		
-		
-//		HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
-//		String myUri = "http://www.baidu.com";
-//
-//	
-//		
-//		byte[] bytearray = new byte[4089];
-//
-//		HttpGet httpGet = new HttpGet(myUri);
-//		try {
-//			URI uri2=URIUtils.createURI("http", "www.baidu.com", 80, "", "", "");
-//			HttpResponse httpResponse = httpClient.execute(httpGet);
-//
-//			HttpEntity httpEntity = httpResponse.getEntity();
-//			if (httpEntity != null) {
-//				InputStream inputStream = httpEntity.getContent();
-//				inputStream.read(bytearray);
-//				
-//				inputStream.close();
-//				
-//			String webdata=	EncodingUtils.getString(bytearray, "gbk");
-//			
-//			Toast toast=Toast.makeText(MainActivity.this, webdata, Toast.LENGTH_SHORT);
-//			toast.show();
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			Log.d("httpclient", e.getMessage());
-//			thread.start();
-//		}
-	
+
+		// HttpClient httpClient = new DefaultHttpClient();// 定义httpclient
+		// String myUri = "http://www.baidu.com";
+		//
+		//
+		//
+		// byte[] bytearray = new byte[4089];
+		//
+		// HttpGet httpGet = new HttpGet(myUri);
+		// try {
+		// URI uri2=URIUtils.createURI("http", "www.baidu.com", 80, "", "", "");
+		// HttpResponse httpResponse = httpClient.execute(httpGet);
+		//
+		// HttpEntity httpEntity = httpResponse.getEntity();
+		// if (httpEntity != null) {
+		// InputStream inputStream = httpEntity.getContent();
+		// inputStream.read(bytearray);
+		//
+		// inputStream.close();
+		//
+		// String webdata= EncodingUtils.getString(bytearray, "gbk");
+		//
+		// Toast toast=Toast.makeText(MainActivity.this, webdata,
+		// Toast.LENGTH_SHORT);
+		// toast.show();
+		// }
+		// } catch (Exception e) {
+		// // TODO: handle exception
+		// Log.d("httpclient", e.getMessage());
+		// thread.start();
+		// }
 
 		// /]
-		
-		
-		///[ socket客户端
-		
-		Button linkButton=(Button)findViewById(R.id.buttonLink);
+
+		// /[ socket客户端
+
+		Button linkButton = (Button) findViewById(R.id.buttonLink);
 		linkButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Proxy myProxy=new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.0.0.1", 6666));
-				
-				Socket mySocket=new Socket(myProxy);
 
-				try {
-				 inputStream=	mySocket.getInputStream();
-				 
+			Thread thread=	new Thread(new Runnable() {
+					public void run() {
+						try {
+					String ip="172.16.203.66";
+					int port=6666;
+					clientSocket = new Socket(ip,port);
+					
+	            System.out.println("Client is created! site:"+ip+" port:"+port);
+				Toast.makeText (MainActivity.this,"创建连接", Toast.LENGTH_SHORT).show();
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-				Log.e("socket", e.getMessage());
+					Log.e("socket", e.getMessage());
 				}
+					}
+				});
+			thread.start();
+				
 			}
 		});
-		
-		
-		///]
+
+		Button sendButton = (Button) findViewById(R.id.buttonSend);
+		sendButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// 获取文本输入 发送信息
+				EditText et = (EditText) findViewById(R.id.editTextSend);
+				String s = et.getText().toString();
+				byte[] buf = EncodingUtils.getBytes(s, "gbk");
+				try {
+					outputStream.write(buf);
+					outputStream.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+		// /]
 	}
 
 	@Override
