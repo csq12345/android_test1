@@ -221,7 +221,7 @@ public class MainActivity extends Activity {
 			Thread thread=	new Thread(new Runnable() {
 					public void run() {
 						try {
-					String ip="172.16.203.66";
+					String ip="172.16.203.56";
 					int port=6666;
 					clientSocket = new Socket(ip,port);
 					
