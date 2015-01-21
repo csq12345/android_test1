@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 	OutputStream outputStream;
 
 	Socket clientSocket;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -218,24 +218,27 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-			Thread thread=	new Thread(new Runnable() {
+				Thread thread = new Thread(new Runnable() {
 					public void run() {
 						try {
-					String ip="172.16.203.56";
-					int port=6666;
-					clientSocket = new Socket(ip,port);
-					
-	            System.out.println("Client is created! site:"+ip+" port:"+port);
-				Toast.makeText (MainActivity.this,"创建连接", Toast.LENGTH_SHORT).show();
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					Log.e("socket", e.getMessage());
-				}
+							EditText ipEditText = (EditText) findViewById(R.id.editText1);
+							String ip = ipEditText.getText().toString();
+							int port = 6666;
+							clientSocket = new Socket(ip, port);
+
+							System.out.println("Client is created! site:" + ip
+									+ " port:" + port);
+							// Toast.makeText (MainActivity.this,"创建连接",
+							// Toast.LENGTH_SHORT).show();
+
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							Log.e("socket", e.getMessage());
+						}
 					}
 				});
-			thread.start();
-				
+				thread.start();
+
 			}
 		});
 
@@ -250,11 +253,18 @@ public class MainActivity extends Activity {
 				String s = et.getText().toString();
 				byte[] buf = EncodingUtils.getBytes(s, "gbk");
 				try {
+					
+					if(outputStream==null)
+					{
+						outputStream=clientSocket.getOutputStream();
+					}
+					
 					outputStream.write(buf);
 					outputStream.flush();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+		
+					Log.e("sendex", e.getMessage());
 				}
 
 			}
