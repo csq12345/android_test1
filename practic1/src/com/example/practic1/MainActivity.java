@@ -27,11 +27,14 @@ import android.R.bool;
 import android.R.string;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.Xml.Encoding;
 import android.view.Menu;
@@ -48,6 +51,8 @@ public class MainActivity extends Activity {
 	OutputStream outputStream;
 
 	Socket clientSocket;
+
+	Handler messageHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +216,20 @@ public class MainActivity extends Activity {
 
 		// /[ socket客户端
 
+		messageHandler = new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+
+				Toast toast = Toast.makeText(MainActivity.this,
+						msg.obj.toString(), Toast.LENGTH_SHORT);
+				toast.show();
+			}
+
+		};
+
 		Button linkButton = (Button) findViewById(R.id.buttonLink);
 		linkButton.setOnClickListener(new View.OnClickListener() {
 
@@ -221,7 +240,7 @@ public class MainActivity extends Activity {
 				Thread thread = new Thread(new Runnable() {
 					public void run() {
 						try {
-							EditText ipEditText = (EditText) findViewById(R.id.editText1);
+							EditText ipEditText = (EditText) findViewById(R.id.editTextPhone);
 							String ip = ipEditText.getText().toString();
 							int port = 6666;
 							clientSocket = new Socket(ip, port);
@@ -230,6 +249,9 @@ public class MainActivity extends Activity {
 									+ " port:" + port);
 							// Toast.makeText (MainActivity.this,"创建连接",
 							// Toast.LENGTH_SHORT).show();
+							Message msg = new Message();
+							msg.obj = "连接成功";
+							messageHandler.sendMessage(msg);
 
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -253,23 +275,40 @@ public class MainActivity extends Activity {
 				String s = et.getText().toString();
 				byte[] buf = EncodingUtils.getBytes(s, "gbk");
 				try {
-					
-					if(outputStream==null)
-					{
-						outputStream=clientSocket.getOutputStream();
+
+					if (outputStream == null) {
+						outputStream = clientSocket.getOutputStream();
 					}
-					
+
 					outputStream.write(buf);
 					outputStream.flush();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-		
+
 					Log.e("sendex", e.getMessage());
 				}
 
 			}
 		});
 		// /]
+
+		// /[短信activity
+
+		Button smsButton = (Button) findViewById(R.id.buttonSMSActivity);
+		smsButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				Intent smsIntent = new Intent();
+				smsIntent.setClass(MainActivity.this, SmsActivity.class);
+				MainActivity.this.startActivity(smsIntent);
+			}
+		});
+
+		// /]
+
 	}
 
 	@Override
