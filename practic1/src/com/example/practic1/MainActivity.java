@@ -23,6 +23,8 @@ import org.apache.http.client.utils.URIUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EncodingUtils;
 
+import com.example.practic1.R.id;
+
 import android.R.bool;
 import android.R.string;
 import android.app.Activity;
@@ -309,6 +311,33 @@ public class MainActivity extends Activity {
 
 		// /]
 
+		
+		///[ GPS
+		
+		Button gpsButton=(Button)findViewById(id.buttonGpsActivity);
+		gpsButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent gpsIntent=new Intent();
+				gpsIntent.setClass(MainActivity.this, GpsActivity.class);
+				MainActivity.this.startActivity(gpsIntent);
+				
+			}
+		});
+		///]
+		
+		
+		Button exitButton=(Button)findViewById(id.buttonExit);
+		exitButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
 	}
 
 	@Override
