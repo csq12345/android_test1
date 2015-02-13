@@ -111,6 +111,54 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonService"
+                android:layout_width="71dp"
+                android:layout_height="wrap_content"
+                android:text="开启服务" />
+
+            <Button
+                android:id="@+id/buttonServiceClose"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text="关闭服务" />
+
+            <Button
+                android:id="@+id/buttonConnService"
+                android:layout_width="66dp"
+                android:layout_height="wrap_content"
+                android:text="连接服务" />
+
+            <Button
+                android:id="@+id/buttonDeConnService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="断开服务" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/buttonReg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册" />
+
+            <Button
+                android:id="@+id/buttonUnReg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注销" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

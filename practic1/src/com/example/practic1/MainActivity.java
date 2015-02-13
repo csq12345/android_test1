@@ -28,14 +28,22 @@ import com.example.practic1.R.id;
 import android.R.bool;
 import android.R.string;
 import android.app.Activity;
+import android.app.Notification.Action;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.util.Xml.Encoding;
@@ -55,6 +63,19 @@ public class MainActivity extends Activity {
 	Socket clientSocket;
 
 	Handler messageHandler;
+
+	Button serviceStartButton;
+	Button serviceStopButton;
+	Button serviceConnButton;
+	Button serviceDesconnButton;
+
+	Button regButton;
+	Button unregButton;
+
+	MyPracticeService mps;
+	ServiceConnection serviceConnection;
+
+	MyBroadcastReceiver myBroadcastReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -311,31 +332,199 @@ public class MainActivity extends Activity {
 
 		// /]
 
-		
-		///[ GPS
-		
-		Button gpsButton=(Button)findViewById(id.buttonGpsActivity);
+		// /[ GPS
+
+		Button gpsButton = (Button) findViewById(id.buttonGpsActivity);
 		gpsButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent gpsIntent=new Intent();
+				Intent gpsIntent = new Intent();
 				gpsIntent.setClass(MainActivity.this, GpsActivity.class);
 				MainActivity.this.startActivity(gpsIntent);
-				
+
 			}
 		});
-		///]
-		
-		
-		Button exitButton=(Button)findViewById(id.buttonExit);
-		exitButton.setOnClickListener(new View.OnClickListener() {
-			
+		// /]
+
+		// /[service
+
+		serviceStartButton = (Button) findViewById(R.id.buttonService);
+		serviceStopButton = (Button) findViewById(R.id.buttonServiceClose);
+		serviceConnButton = (Button) findViewById(R.id.buttonConnService);
+		serviceDesconnButton = (Button) findViewById(R.id.buttonDeConnService);
+
+		serviceStartButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				System.exit(0);
+
+				try {
+					Intent startIntent = new Intent();
+					startIntent.setClass(MainActivity.this,
+							MyPracticeService.class);
+
+					ComponentName componentName = startService(startIntent);
+
+					String sername = componentName.getClassName();
+					Toast.makeText(MainActivity.this, sername,
+							Toast.LENGTH_SHORT).show();
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					Toast.makeText(MainActivity.this, e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
+
+		serviceStopButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+					Intent startIntent = new Intent();
+					startIntent.setClass(MainActivity.this,
+							MyPracticeService.class);
+
+					boolean b = stopService(startIntent);
+
+					if (b) {
+						Toast.makeText(MainActivity.this, "服务关闭",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(MainActivity.this, "关闭失败",
+								Toast.LENGTH_SHORT).show();
+					}
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					Toast.makeText(MainActivity.this, e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+
+		serviceConnButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+
+					if (serviceConnection == null) {
+						serviceConnection = new ServiceConnection() {
+
+							@Override
+							public void onServiceDisconnected(ComponentName name) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onServiceConnected(ComponentName name,
+									IBinder service) {
+								// TODO Auto-generated method stub
+
+								MyPracticeService.LocalBinder binder = ((MyPracticeService.LocalBinder) service);
+								mps = binder.GetService();
+							}
+						};
+					}
+
+					Intent bindIntent = new Intent(MainActivity.this,
+							MyPracticeService.class);
+					boolean b = bindService(bindIntent, serviceConnection,
+							BIND_AUTO_CREATE);
+					if (b) {
+						Toast.makeText(MainActivity.this, "绑定成功",
+								Toast.LENGTH_SHORT).show();
+					}
+
+					else {
+						Toast.makeText(MainActivity.this, "绑定失败",
+								Toast.LENGTH_SHORT).show();
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					Toast.makeText(MainActivity.this, e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+
+		serviceDesconnButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+
+					unbindService(serviceConnection);
+
+					Toast.makeText(MainActivity.this, "断开服务",
+							Toast.LENGTH_SHORT).show();
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					Toast.makeText(MainActivity.this, e.getMessage(),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+
+		// /]
+
+		// /[ broadreceiver
+
+		regButton = (Button) findViewById(R.id.buttonReg);
+		unregButton = (Button) findViewById(R.id.buttonUnReg);
+
+		regButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+				if (myBroadcastReceiver != null) {
+					unregisterReceiver(myBroadcastReceiver);
+				} else {
+	
+				
+					
+					IntentFilter reginIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+					myBroadcastReceiver = new MyBroadcastReceiver();
+					registerReceiver(myBroadcastReceiver, reginIntentFilter);
+					
+					Toast.makeText(MainActivity.this, "注册",
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
+
+		unregButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				unregisterReceiver(myBroadcastReceiver);
+			}
+		});
+
+		// /]
+
+		Button exitButton = (Button) findViewById(id.buttonExit);
+		exitButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MainActivity.this.finish();
 			}
 		});
 	}
