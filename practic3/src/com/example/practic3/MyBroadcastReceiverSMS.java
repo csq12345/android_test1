@@ -17,12 +17,12 @@ public class MyBroadcastReceiverSMS extends BroadcastReceiver {
 		System.out.print("接收到广播");
 		Toast.makeText(context, "接收到广播", Toast.LENGTH_SHORT).show();
 
-		Intent openIntent = new Intent();
-		openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
-		openIntent.setClassName("com.example.practic1",
-				"com.example.practic1.MainActivity");
-
-		context.startActivity(openIntent);
+//		Intent openIntent = new Intent();
+//		openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+//		openIntent.setClassName("com.example.practic1",
+//				"com.example.practic1.MainActivity");
+//
+//		context.startActivity(openIntent);
 		} catch (Exception e) {
 			// TODO: handle exception
 			Log.i("MyBroadcastReceiver","onReceive异常");

@@ -7,6 +7,7 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,11 @@
         <receiver android:name="MyBroadcastReceiverSMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="MyBroadcastReceiverBoot">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
         
