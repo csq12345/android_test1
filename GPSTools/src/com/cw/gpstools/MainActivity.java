@@ -20,12 +20,16 @@ public class MainActivity extends Activity {
 
 	GPSService gpsService;
 
+	ToolHelper toolHelper;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		toolHelper=new ToolHelper();
+		
 		openButton = (Button) findViewById(R.id.buttonOpenSer);
 		closeButton = (Button) findViewById(R.id.buttonCloseSer);
 		exitButton = (Button) findViewById(R.id.buttonExit);
@@ -36,35 +40,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent serIntent = new Intent();
-				serIntent.setClass(MainActivity.this, GPSService.class);
-				// 检查之前服务是否运行
-				ServiceConnection serviceConnection = new ServiceConnection() {
-
-					@Override
-					public void onServiceDisconnected(ComponentName name) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onServiceConnected(ComponentName name,
-							IBinder service) {
-						// TODO Auto-generated method stub
-						Log.i("gps", "onServiceConnected");
-					}
-				};
-				boolean b = bindService(serIntent, serviceConnection,
-						BIND_ADJUST_WITH_ACTIVITY);
-
-				if (b) {
-					
-
-				} else {
-					// 创建新服务
-
-					ComponentName componentName = startService(serIntent);
-				}
+				toolHelper.OpenGPSService(MainActivity.this);
 
 			}
 		});
