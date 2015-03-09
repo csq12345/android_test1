@@ -4,10 +4,10 @@ import android.R.integer;
 
 public class Scell
 {
-int MCC;//国家码
-int MNC;//移动网络码 00移动 01联通
-int LAC;//位置区域码
-int CID;//基站编号
+int MCC=0;//国家码
+int MNC=0;//移动网络码 00移动 01联通
+int LAC=0;//位置区域码
+int CID=0;//基站编号
 public int getMCC()
 {
 	return MCC;
