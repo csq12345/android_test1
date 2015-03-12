@@ -4,6 +4,7 @@ import com.example.chapter12_2.R.id;
 
 import android.R.integer;
 import android.app.Activity;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.telephony.CellLocation;
 import android.telephony.TelephonyManager;
@@ -78,17 +79,17 @@ public class MainActivity extends Activity
 		try
 		{
 			Scell scell = GetCellInfo();
-			//SItude sItude = GetItude();
-			
+			// SItude sItude = GetItude();
+
 			textViewMCC.setText(Integer.toString(scell.MCC));
 			textViewMNC.setText(Integer.toString(scell.MNC));
-			String lac=Integer.toString(scell.LAC);
+			String lac = Integer.toString(scell.LAC);
 			textViewLAC.setText(lac);
 			textViewCID.setText(Integer.toString(scell.CID));
 
 		} catch (Exception ex)
 		{
-			Toast.makeText(this,ex.getMessage(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -98,20 +99,22 @@ public class MainActivity extends Activity
 
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
-		GsmCellLocation cellLocation = (GsmCellLocation)telephonyManager.getCellLocation();
+		GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager
+				.getCellLocation();
 
-		if(cellLocation==null)
+		if (cellLocation == null)
 		{
-			Toast.makeText(this, "cellLocationΪnull", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "cellLocationΪnull", Toast.LENGTH_SHORT)
+					.show();
 			return scell;
 		}
-		String operator=	telephonyManager.getNetworkOperator();
-		
+		String operator = telephonyManager.getNetworkOperator();
+
 		scell.setMCC(Integer.parseInt(operator.substring(0, 3)));
 		scell.setMNC(Integer.parseInt(operator.substring(3)));
 		scell.setCID(cellLocation.getCid());
 		scell.setLAC(cellLocation.getLac());
-		
+
 		
 		return scell;
 	}
@@ -119,6 +122,14 @@ public class MainActivity extends Activity
 	SItude GetItude()
 	{
 		return null;
+	}
+
+	void DoWofi()
+	{
+		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+		String bssid=wifiManager.getConnectionInfo().getBSSID();
+		
+		
 	}
 
 }
