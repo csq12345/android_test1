@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.autoload"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.11" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:maxSdkVersion="19"/>
+    <uses-permission android:name="android.permission.GET_TASKS" android:maxSdkVersion="19"/>
 
     <application
         android:allowBackup="true"
@@ -29,9 +29,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <service android:name="AutoLoadService">
+        <service android:name="AutoLoadService" android:exported="false">
             <intent-filter>
-                <action android:name="com.example.autoload.autoloadservice"/>
+                <action android:name="com.example.autoload.autoloadservice" />
             </intent-filter>
         </service>
     </application>

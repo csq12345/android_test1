@@ -85,7 +85,7 @@ public class AutoLoadService extends Service {
 				ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
 				while (isrun) {
-					//c++;
+					// c++;
 					Log.d(tag, "running " + randnum);
 
 					// 获取当前显示的activity
@@ -96,30 +96,43 @@ public class AutoLoadService extends Service {
 					Log.d(tag, info);
 
 					// 判断
-					if (componentName.getClassName().equals("com.hiveview.domybox.activity.MainActivity")) {
-						Message msg = myHandler.obtainMessage();
-						Bundle bundle = new Bundle();
-						bundle.putString("info", "停止显示 大麦桌面");
-						msg.setData(bundle);
-						myHandler.sendMessage(msg);
-						
-						
+					if (componentName.getClassName().equals(
+							"com.hiveview.domybox.activity.MainActivity")) {
+
 						Intent activityIntent = new Intent();
 						ComponentName shafacomponentName = new ComponentName(
 								"com.shafa.launcher",
 								"com.shafa.launcher.ShafaHomeAct");
 						activityIntent.setComponent(shafacomponentName);
 						activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						startActivity(activityIntent);
 
-						
+						if (getPackageManager().resolveActivity(activityIntent,
+								0) == null) {
+
+							// 不存在
+							Message msg = myHandler.obtainMessage();
+							Bundle bundle = new Bundle();
+							bundle.putString("info", "未找到沙发桌面");
+							msg.setData(bundle);
+							myHandler.sendMessage(msg);
+							isrun=false;
+						} else {
+							Message msg = myHandler.obtainMessage();
+							Bundle bundle = new Bundle();
+							bundle.putString("info", "停止显示 大麦桌面");
+							msg.setData(bundle);
+							myHandler.sendMessage(msg);
+							startActivity(activityIntent);
+						}
+
 					} else {
-//						Message msg = myHandler.obtainMessage();
-//						Bundle bundle = new Bundle();
-//						// bundle.putString("info", "当前显示 domybox.activity");
-//						bundle.putString("info", componentName.getClassName());
-//						msg.setData(bundle);
-//						myHandler.sendMessage(msg);
+						// Message msg = myHandler.obtainMessage();
+						// Bundle bundle = new Bundle();
+						// // bundle.putString("info", "当前显示 domybox.activity");
+						// bundle.putString("info",
+						// componentName.getClassName());
+						// msg.setData(bundle);
+						// myHandler.sendMessage(msg);
 					}
 
 					SystemClock.sleep(1000);
