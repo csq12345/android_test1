@@ -22,10 +22,10 @@ public class MyRecord
 
 	public MyRecord()
 	{
-		bufferSizeInBytes = AudioRecord.getMinBufferSize(22050,
+		bufferSizeInBytes = AudioRecord.getMinBufferSize(11025,
 				AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
-		myAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, 22050,
+		myAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, 11025,
 				AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT,
 				bufferSizeInBytes);
 
@@ -41,7 +41,7 @@ public class MyRecord
 			@Override
 			public void run()
 			{
-				FileOutputStream outStream=null;
+				FileOutputStream outStream = null;
 				try
 				{
 					File saveFile = new File(Environment
@@ -53,44 +53,57 @@ public class MyRecord
 					}
 					saveFile.createNewFile();
 
-					 outStream = new FileOutputStream(saveFile);
+					outStream = new FileOutputStream(saveFile);
 
-					 BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(outStream);
-					 DataOutputStream dataOutputStream=new DataOutputStream(bufferedOutputStream);
+					BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
+							outStream);
+					DataOutputStream dataOutputStream = new DataOutputStream(
+							bufferedOutputStream);
 					short[] audioData = new short[bufferSizeInBytes];
 					int len = 0;
 					while (reding)
 					{
 						len = myAudioRecord.read(audioData, 0,
 								bufferSizeInBytes);
-						for(int i=0;i<len;i++)
+
+						for (int i = 0; i < len; i++)
 						{
 							dataOutputStream.writeShort(audioData[i]);
 						}
-					
-						Log.d(tag, "Ð´Èë "+len);
+						if (len <= 0)
+						{
+							break;
+						}
+						Log.d(tag, "Ð´Èë " + len);
 					}
+					reding = false;
 					dataOutputStream.close();
 					bufferedOutputStream.close();
 					outStream.close();
 				} catch (Exception ex)
 				{
-					Log.e(tag, ex.getMessage());		
-				}
-				finally{
-		
+					Log.e(tag, ex.getMessage());
+				} finally
+				{
+
 				}
 			}
 		});
-		
+
 		recordThread.start();
 	}
 
 	public void Stop()
 	{
-		
+
 		myAudioRecord.stop();
-		reding=false;
+		reding = false;
 	}
 
+	public void Stop1()
+	{
+
+		myAudioRecord.stop();
+
+	}
 }

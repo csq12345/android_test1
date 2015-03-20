@@ -6,53 +6,40 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.paad_15_18.MainActivity" >
+    tools:context="com.example.paad_15_26.MainActivity" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/buttonStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="开始" />
-
-            <Button
-                android:id="@+id/buttonStop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="停止" />
-
-            <Button
-                android:id="@+id/buttonStop1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="停录" />
-
-        </LinearLayout>
+        <SurfaceView
+            android:id="@+id/surfaceView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/buttonPlay"
+                android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="播放" />
+                android:text="初始" />
 
             <Button
-                android:id="@+id/buttonStopPlay"
+                android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="停播" />
+                android:text="打开" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭" />
 
         </LinearLayout>
 

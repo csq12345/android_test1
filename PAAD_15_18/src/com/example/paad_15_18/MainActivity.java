@@ -13,7 +13,13 @@ public class MainActivity extends Activity implements OnClickListener
 
 	Button startButton;
 	Button stopButton;
+	Button stop1Button;
+	Button playButton;
+	Button stopPlayButton;
+	
 MyRecord myRecord;
+
+MyTrack myTrack;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -22,10 +28,16 @@ MyRecord myRecord;
 
 		startButton = (Button) findViewById(R.id.buttonStart);
 		stopButton = (Button) findViewById(R.id.buttonStop);
-
+		stop1Button = (Button) findViewById(R.id.buttonStop1);
+		playButton = (Button) findViewById(R.id.buttonPlay);
+		stopPlayButton = (Button) findViewById(R.id.buttonStopPlay);
+		
+		
 		startButton.setOnClickListener(this);
 		stopButton.setOnClickListener(this);
-
+		stop1Button.setOnClickListener(this);
+		playButton.setOnClickListener(this);
+		stopPlayButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -73,7 +85,31 @@ MyRecord myRecord;
 				}
 			}
 				break;
-
+			case R.id.buttonStop1:
+			{
+				if(myRecord!=null)
+				{
+					myRecord.Stop1();
+				}
+			}
+				break;
+			case R.id.buttonPlay:
+			{
+				if(myTrack==null)
+				{
+					myTrack=new MyTrack(this);
+				}
+				myTrack.Play();
+			}
+				break;
+			case R.id.buttonStopPlay:
+			{
+				if(myTrack!=null)
+				{
+					myTrack.StopPlay();
+				}
+			}
+				break;
 			default:
 				break;
 		}
