@@ -39,4 +39,46 @@
         android:layout_below="@+id/linearLayout1"
         android:text="退出" />
 
+    <Button
+        android:id="@+id/buttonRegisterGPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonExit"
+        android:layout_below="@+id/buttonExit"
+        android:text="注册GPS" />
+
+    <Button
+        android:id="@+id/buttonUnRegisterGPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonRegisterGPS"
+        android:layout_alignBottom="@+id/buttonRegisterGPS"
+        android:layout_toRightOf="@+id/buttonRegisterGPS"
+        android:text="注销GPS" />
+
+    <TextView
+        android:id="@+id/textViewLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonUnRegisterGPS"
+        android:layout_below="@+id/textViewLatidute"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewLatidute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewLongitude"
+        android:layout_alignTop="@+id/buttonExit"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewSatellite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonUnRegisterGPS"
+        android:layout_below="@+id/textViewLongitude"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>
