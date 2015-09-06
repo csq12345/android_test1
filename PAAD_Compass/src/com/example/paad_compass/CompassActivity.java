@@ -10,16 +10,13 @@ import android.widget.Button;
 
 public class CompassActivity extends Activity
 {
-CompassView cv;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-	
-		
-	
 		Button button1 = (Button) findViewById(R.id.button1);
 
 		button1.setOnClickListener(new View.OnClickListener()
@@ -29,8 +26,10 @@ CompassView cv;
 			public void onClick(View v)
 			{
 				try
-				{				
-					cv.setBearing(45);
+				{
+					CompassView cView = (CompassView) findViewById(R.id.compassView1);
+
+					cView.setBearing(45);
 				} catch (Exception e)
 				{
 					Log.d("dddd", e.getMessage());
