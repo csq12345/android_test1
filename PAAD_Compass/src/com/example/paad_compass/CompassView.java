@@ -42,7 +42,7 @@ public class CompassView extends View
 	String westString;
 	int textHeight;
 
-	void InitcompassView()
+	public void InitcompassView()
 	{
 		setFocusable(true);
 
