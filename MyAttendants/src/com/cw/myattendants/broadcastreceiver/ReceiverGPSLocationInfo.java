@@ -8,10 +8,8 @@ import android.os.Message;
 
 public class ReceiverGPSLocationInfo extends BroadcastReceiver
 {
-
 	Handler uiHandler;
-	
-	//´«ÈëÒ»¸ö¾ä±ú
+	//ä¼ å…¥ä¸€ä¸ªå¥æŸ„
 	public ReceiverGPSLocationInfo(Handler uIHandler)
 	{
 		uiHandler = uIHandler;

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context=".activity.MainActivity" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -51,10 +51,8 @@
         android:id="@+id/buttonUnRegisterGPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonRegisterGPS"
-        android:layout_alignBottom="@+id/buttonRegisterGPS"
-        android:layout_toRightOf="@+id/buttonRegisterGPS"
-        android:text="注销GPS" />
+        android:text="注销GPS" android:layout_below="@+id/textViewSatellite"
+        android:layout_alignRight="@+id/linearLayout1" />
 
     <TextView
         android:id="@+id/textViewLongitude"
@@ -78,7 +76,12 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/buttonUnRegisterGPS"
         android:layout_below="@+id/textViewLongitude"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:text="Small Text" />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:id="@+id/textViewBundelCount" android:layout_below="@+id/buttonUnRegisterGPS"
+            android:layout_alignRight="@+id/buttonUnRegisterGPS" />
 
 </RelativeLayout>

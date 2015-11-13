@@ -22,11 +22,11 @@
                 <action android:name="com.cw.myattendants.service.ListenGPSService"/>
             </intent-filter>
         </service>
-        <receiver android:name=".broadcastreceiver.OnBootCompleteBroadcast">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+     <receiver android:name=".broadcastreceiver.OnBootCompleteBroadcast">
+         <intent-filter>
+             <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+         </intent-filter>
+     </receiver>
     </application>
 
 </manifest>

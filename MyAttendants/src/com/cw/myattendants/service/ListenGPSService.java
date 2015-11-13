@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.text.AndroidCharacter;
 
+
+//GPS后台Service
 public class ListenGPSService extends Service
 {
 	LocationManager locationManager = null;
@@ -29,25 +31,26 @@ public class ListenGPSService extends Service
 		return null;
 	}
 
+
 	@Override
 	public void onCreate()
 	{
 		// TODO Auto-generated method stub
 		if (locationManager == null)
 		{
-			locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-			location_Listen = new Location_Listen();
+			locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);//获取定位服务
+			location_Listen = new Location_Listen();//创建一个定位监听
 		}
 
 		boolean gpsEnabled = locationManager
-				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);//获取定位服务是否启用
 		if (gpsEnabled)
 		{
 			locationManager.requestLocationUpdates(
 					LocationManager.GPS_PROVIDER, minTime, minDistance,
-					location_Listen);
+					location_Listen);//向定位服务注册监听 当定位发生变化时 会触发监听
 				
-			locationManager.addGpsStatusListener(new GpsStatuListen());
+			locationManager.addGpsStatusListener(new GpsStatuListen());//添加一个gps状态监听
 		}
 		super.onCreate();
 	}
@@ -63,6 +66,7 @@ public class ListenGPSService extends Service
 	public void onDestroy()
 	{
 		// TODO Auto-generated method stub
+		//销毁向定位服务注册的监听
 		if (locationManager != null)
 		{
 			locationManager.removeUpdates(location_Listen);
@@ -80,7 +84,7 @@ public class ListenGPSService extends Service
 	String intentTag = "com.cw.myattendants.service.ListenGPSService";
 	int count=0;
 	
-	//gpslocationg����
+	//gpslocationg监听
 	class Location_Listen implements LocationListener
 	{
 
@@ -91,9 +95,9 @@ public class ListenGPSService extends Service
 
 			Intent intent = new Intent(intentTag);
 			Bundle bundle = new Bundle();
-			bundle.putDouble("Latitude", location.getLatitude());// γ��
-			bundle.putDouble("Longitude", location.getLongitude());// ����
-			bundle.putDouble("SatelliteCount",count);// ����
+			bundle.putDouble("Latitude", location.getLatitude());// 经度
+			bundle.putDouble("Longitude", location.getLongitude());// 维度
+			bundle.putDouble("SatelliteCount",count);//卫星数
 			intent.putExtra("gpsbundle", bundle);
 
 			sendBroadcast(intent);
@@ -124,7 +128,7 @@ public class ListenGPSService extends Service
 
 	}
 
-	//gpsstatu����
+	//gpsstatu����
 	class GpsStatuListen implements GpsStatus.Listener
 	{
 

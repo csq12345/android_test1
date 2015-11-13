@@ -33,7 +33,10 @@ public class MainActivity extends Activity implements OnClickListener
 	Button registerGpsButton;
 	Button unregisterGpsButton;
 
-	TextView latiduteTextView, longiduTextView, satalliteTextView;
+	TextView latiduteTextView, longiduTextView, satalliteTextView,bundelTextView;
+
+	//æ¥å—åŒ…è®¡æ•°
+	int bunblecount=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +62,7 @@ public class MainActivity extends Activity implements OnClickListener
 		longiduTextView = (TextView) findViewById(R.id.textViewLongitude);
 		latiduteTextView = (TextView) findViewById(R.id.textViewLatidute);
 		satalliteTextView = (TextView) findViewById(R.id.textViewSatellite);
-
+		bundelTextView=(TextView)findViewById(R.id.textViewBundelCount);
 	}
 
 	@Override
@@ -86,12 +89,12 @@ public class MainActivity extends Activity implements OnClickListener
 
 			}
 				break;
-			case R.id.buttonRegisterGPS:// ×¢²ágps
+			case R.id.buttonRegisterGPS:// æ³¨å†Œgps
 			{
 				Register();
 			}
 				break;
-			case R.id.buttonUnRegisterGPS:// ×¢Ïúgps
+			case R.id.buttonUnRegisterGPS:// æ³¨é”€gps
 			{
 				UnRegister();
 			}
@@ -110,10 +113,10 @@ public class MainActivity extends Activity implements OnClickListener
 
 			startService(gpsIntent);
 
-			Toast.makeText(this, "·şÎñÆô¶¯", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "æœåŠ¡å¯åŠ¨", Toast.LENGTH_SHORT).show();
 		} else
 		{
-			Toast.makeText(this, "·şÎñÖØ¸´Æô¶¯", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "æœåŠ¡é‡å¤å¯åŠ¨", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -138,18 +141,19 @@ public class MainActivity extends Activity implements OnClickListener
 				public boolean handleMessage(Message msg)
 				{
 					// TODO Auto-generated method stub
-
+					bunblecount++;
 					Bundle bundle = msg.getData();
 
-					double longitude = bundle.getDouble("Longitude");// ¾­¶È
-					double latitude = bundle.getDouble("Latitude");// Î³¶È
+					double longitude = bundle.getDouble("Longitude");// ç»åº¦
+					double latitude = bundle.getDouble("Latitude");// çº¬åº¦
 
 					int count = bundle.getInt("SatelliteCount");
 
 					longiduTextView.setText(String.valueOf(longitude));
 					latiduteTextView.setText(String.valueOf(latitude));
 					satalliteTextView.setText(String.valueOf(count));
-					return false;
+					bundelTextView.setText(String.valueOf(bunblecount));
+					return true;
 				}
 			});
 
@@ -161,7 +165,7 @@ public class MainActivity extends Activity implements OnClickListener
 
 		}
 		else {
-			Toast.makeText(this, "ÖØ¸´×¢²á",1).show();
+			Toast.makeText(this, "é‡å¤æ³¨å†Œ",1).show();
 		}
 	}
 
@@ -177,7 +181,7 @@ public class MainActivity extends Activity implements OnClickListener
 
 	// /]
 
-	// ¼ì²é·şÎñÊÇ·ñÕıÔÚÔËĞĞ
+	// æ£€æŸ¥æœåŠ¡æ˜¯å¦æ­£åœ¨è¿è¡Œ
 	<T> boolean CheckServiceIsRuning(Class<T> classT)
 	{
 		ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
