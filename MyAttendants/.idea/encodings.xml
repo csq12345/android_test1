@@ -5,6 +5,9 @@
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/broadcastreceiver/OnBootCompleteBroadcast.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/broadcastreceiver/ReceiverGPSLocationInfo.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/service/ListenGPSService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/TMS.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/basepage.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/basepage.js" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

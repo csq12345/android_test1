@@ -27,180 +27,191 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 
-	Button startButton;
-	Button stopButton;
-	Button exitButton;
-	Button registerGpsButton;
-	Button unregisterGpsButton;
+    Button startButton;
+    Button stopButton;
+    Button exitButton;
+    Button registerGpsButton;
+    Button unregisterGpsButton;
 
-	TextView latiduteTextView, longiduTextView, satalliteTextView,bundelTextView;
+    TextView latiduteTextView, longiduTextView, satalliteTextView, bundelTextView;
 
-	//接受包计数
-	int bunblecount=0;
+    //接受包计数
+    int bunblecount = 0;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		startButton = (Button) findViewById(R.id.buttonStartSer);
-		stopButton = (Button) findViewById(R.id.buttonStopSer);
-		exitButton = (Button) findViewById(R.id.buttonExit);
+        startButton = (Button) findViewById(R.id.buttonStartSer);
+        stopButton = (Button) findViewById(R.id.buttonStopSer);
+        exitButton = (Button) findViewById(R.id.buttonExit);
 
-		registerGpsButton = (Button) findViewById(R.id.buttonRegisterGPS);
-		unregisterGpsButton = (Button) findViewById(R.id.buttonUnRegisterGPS);
+        registerGpsButton = (Button) findViewById(R.id.buttonRegisterGPS);
+        unregisterGpsButton = (Button) findViewById(R.id.buttonUnRegisterGPS);
 
-		startButton.setOnClickListener(this);
-		stopButton.setOnClickListener(this);
-		exitButton.setOnClickListener(this);
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
+        exitButton.setOnClickListener(this);
 
-		registerGpsButton.setOnClickListener(this);
-		unregisterGpsButton.setOnClickListener(this);
+        registerGpsButton.setOnClickListener(this);
+        unregisterGpsButton.setOnClickListener(this);
 
-		longiduTextView = (TextView) findViewById(R.id.textViewLongitude);
-		latiduteTextView = (TextView) findViewById(R.id.textViewLatidute);
-		satalliteTextView = (TextView) findViewById(R.id.textViewSatellite);
-		bundelTextView=(TextView)findViewById(R.id.textViewBundelCount);
-	}
+        longiduTextView = (TextView) findViewById(R.id.textViewLongitude);
+        latiduteTextView = (TextView) findViewById(R.id.textViewLatidute);
+        satalliteTextView = (TextView) findViewById(R.id.textViewSatellite);
+        bundelTextView = (TextView) findViewById(R.id.textViewBundelCount);
+    }
 
-	@Override
-	public void onClick(View v)
-	{
-		int vid = v.getId();
-		switch (vid)
-		{
-			case R.id.buttonStartSer:
-			{
+    @Override
+    public void onClick(View v)
+    {
+        int vid = v.getId();
+        switch (vid)
+        {
+            case R.id.buttonStartSer:
+            {
 
-				StartGPS();
-			}
-				break;
-			case R.id.buttonStopSer:
-			{
+                StartGPS();
+            }
+            break;
+            case R.id.buttonStopSer:
+            {
 
-				StopGPS();
-			}
-				break;
-			case R.id.buttonExit:
-			{
-				finish();
+                StopGPS();
+            }
+            break;
+            case R.id.buttonExit:
+            {
+                finish();
 
-			}
-				break;
-			case R.id.buttonRegisterGPS:// 注册gps
-			{
-				Register();
-			}
-				break;
-			case R.id.buttonUnRegisterGPS:// 注销gps
-			{
-				UnRegister();
-			}
-				break;
-		}
+            }
+            break;
+            case R.id.buttonRegisterGPS:// 注册gps
+            {
+                Register();
+            }
+            break;
+            case R.id.buttonUnRegisterGPS:// 注销gps
+            {
+                UnRegister();
+            }
+            break;
+        }
 
-	}
+    }
 
-	// /[ GPS
+    // /[ GPS
 
-	void StartGPS()
-	{
-		if (!CheckServiceIsRuning(ListenGPSService.class))
-		{
-			Intent gpsIntent = new Intent(this, ListenGPSService.class);
+    void StartGPS()
+    {
+        if (!CheckServiceIsRuning(ListenGPSService.class))
+        {
+            Intent gpsIntent = new Intent(this, ListenGPSService.class);
 
-			startService(gpsIntent);
+            startService(gpsIntent);
 
-			Toast.makeText(this, "服务启动", Toast.LENGTH_SHORT).show();
-		} else
-		{
-			Toast.makeText(this, "服务重复启动", Toast.LENGTH_SHORT).show();
-		}
-	}
+            Toast.makeText(this, "服务启动", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Toast.makeText(this, "服务重复启动", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-	void StopGPS()
-	{
-		Intent gpsIntent = new Intent(this, ListenGPSService.class);
-		stopService(gpsIntent);
-	}
+    void StopGPS()
+    {
+        Intent gpsIntent = new Intent(this, ListenGPSService.class);
+        stopService(gpsIntent);
+    }
 
-	String intentTag = "com.cw.myattendants.service.ListenGPSService";
-	Handler gpsHandler;
-	ReceiverGPSLocationInfo receiverGPSLocationInfo;
+    String intentTag = "com.cw.myattendants.service.ListenGPSService";
+    Handler gpsHandler;
+    ReceiverGPSLocationInfo receiverGPSLocationInfo;
+//注册服务
+    void Register()
+    {
+        if (receiverGPSLocationInfo == null)
+        {
+            gpsHandler = new Handler(new Handler.Callback()
+            {
 
-	void Register()
-	{
-		if (receiverGPSLocationInfo == null)
-		{
-			gpsHandler = new Handler(new Handler.Callback()
-			{
+                @Override
+                public boolean handleMessage(Message msg)
+                {
+                    try
+                    {
+                        //接收消息计数加1
+                        bunblecount++;
+//					Bundle bundle = msg.getData();
+//
+//					double longitude = bundle.getDouble("Longitude");// 经度
+//					double latitude = bundle.getDouble("Latitude");// 纬度
+//
+//					int count = bundle.getInt("SatelliteCount");
+//
+//					longiduTextView.setText(String.valueOf(longitude));
+//					latiduteTextView.setText(String.valueOf(latitude));
+//					satalliteTextView.setText(String.valueOf(count));
 
-				@Override
-				public boolean handleMessage(Message msg)
-				{
-					// TODO Auto-generated method stub
-					bunblecount++;
-					Bundle bundle = msg.getData();
+                        bundelTextView.setText(String.valueOf(bunblecount));
+                        return true;
+                    } catch (Exception ex)
+                    {
+                        return false;
+                    }
 
-					double longitude = bundle.getDouble("Longitude");// 经度
-					double latitude = bundle.getDouble("Latitude");// 纬度
+                }
+            });
 
-					int count = bundle.getInt("SatelliteCount");
+            IntentFilter intentFilter =new IntentFilter(intentTag);
 
-					longiduTextView.setText(String.valueOf(longitude));
-					latiduteTextView.setText(String.valueOf(latitude));
-					satalliteTextView.setText(String.valueOf(count));
-					bundelTextView.setText(String.valueOf(bunblecount));
-					return true;
-				}
-			});
+            receiverGPSLocationInfo = new ReceiverGPSLocationInfo(gpsHandler);
 
-			IntentFilter intentFilter = new IntentFilter(intentTag);
+            registerReceiver(receiverGPSLocationInfo, intentFilter);
 
-			receiverGPSLocationInfo = new ReceiverGPSLocationInfo(gpsHandler);
+            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
 
-			registerReceiver(receiverGPSLocationInfo, intentFilter);
+        } else
+        {
+            Toast.makeText(this, "重复注册", Toast.LENGTH_SHORT).show();
+        }
+    }
+//注销服务监听
+    void UnRegister()
+    {
+        if (receiverGPSLocationInfo != null)
+        {
+            unregisterReceiver(receiverGPSLocationInfo);
+            receiverGPSLocationInfo = null;
+            Toast.makeText(this, "注销成功", Toast.LENGTH_SHORT).show();
+        }
 
-		}
-		else {
-			Toast.makeText(this, "重复注册",1).show();
-		}
-	}
+    }
 
-	void UnRegister()
-	{
-		if (receiverGPSLocationInfo != null)
-		{
-			unregisterReceiver(receiverGPSLocationInfo);
-			receiverGPSLocationInfo=null;
-		}
+    // /]
 
-	}
+    // 检查服务是否正在运行
+    <T> boolean CheckServiceIsRuning(Class<T> classT)
+    {
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        List<RunningServiceInfo> runningServiceInfos = activityManager
+                .getRunningServices(Integer.MAX_VALUE);
+        if (runningServiceInfos != null)
+        {
+            for (RunningServiceInfo runningServiceInfo : runningServiceInfos)
+            {
+                if (runningServiceInfo.service.getClassName().equals(
+                        classT.getName()))
+                {
 
-	// /]
+                    return true;
+                }
+            }
 
-	// 检查服务是否正在运行
-	<T> boolean CheckServiceIsRuning(Class<T> classT)
-	{
-		ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		List<RunningServiceInfo> runningServiceInfos = activityManager
-				.getRunningServices(Integer.MAX_VALUE);
-		if (runningServiceInfos != null)
-		{
-			for (RunningServiceInfo runningServiceInfo : runningServiceInfos)
-			{
-				if (runningServiceInfo.service.getClassName().equals(
-						classT.getName()))
-				{
-
-					return true;
-				}
-			}
-
-		}
-		return false;
-	}
+        }
+        return false;
+    }
 
 }
