@@ -1,11 +1,11 @@
 package com.cw.myattendants.broadcastreceiver;
 
 
-import com.cw.myattendants.service.ListenGPSService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import com.cw.myattendants.service.ListenGPSService;
 
 public class OnBootCompleteBroadcast extends BroadcastReceiver
 {
