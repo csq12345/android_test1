@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../../PHP/MyMap/TMS.js" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/../../PHP/MyMap/basepage.html" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/../../PHP/MyMap/basepage.js" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/activity/MainActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/broadcastreceiver/OnBootCompleteBroadcast.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/broadcastreceiver/ReceiverGPSLocationInfo.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/cw/myattendants/service/ListenGPSService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/TMS.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/basepage.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/../../php/MyMap/basepage.js" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
