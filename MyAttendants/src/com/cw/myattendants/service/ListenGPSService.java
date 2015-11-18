@@ -48,11 +48,41 @@ public class ListenGPSService extends Service
 		}
 		super.onCreate();
 	}
-
+int tcount=0;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		// TODO Auto-generated method stub
+
+		Thread t=new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+
+			{
+				long time=2000;
+				try
+				{
+					while (true)
+					{
+						tcount++;
+						Intent intent = new Intent(intentTag);
+
+						String sss=String.valueOf(tcount);
+						intent.putExtra("timecount", sss);
+						sendBroadcast(intent);
+
+						Thread.sleep(time);
+					}
+				}
+				catch (Exception ex)
+				{
+
+				}
+
+			}
+		});
+		t.start();
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -88,11 +118,12 @@ public class ListenGPSService extends Service
 			// TODO Auto-generated method stub
 
 			Intent intent = new Intent(intentTag);
-			Bundle bundle = new Bundle();
-			bundle.putDouble("Latitude", location.getLongitude());// 经度
-			bundle.putDouble("Longitude", location.getLongitude());// 维度
-			bundle.putInt("SatelliteCount", count);//卫星数
-			intent.putExtra("gpsbundle", bundle);
+//			Bundle bundle = new Bundle();
+//			bundle.putDouble("Latitude", location.getLongitude());// 经度
+//			bundle.putDouble("Longitude", location.getLongitude());// 维度
+//			bundle.putInt("SatelliteCount", count);//卫星数
+			String sss=location.getLongitude()+","+location.getLatitude()+","+count;
+			intent.putExtra("gpsbundle", sss);
 
 			sendBroadcast(intent);
 

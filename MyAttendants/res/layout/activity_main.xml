@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Small Text"
-            android:id="@+id/textViewBundelCount" android:layout_below="@+id/buttonUnRegisterGPS"
-            android:layout_alignRight="@+id/buttonUnRegisterGPS" />
+            android:id="@+id/textViewBundelCount"
+            android:layout_below="@+id/buttonUnRegisterGPS" android:layout_alignRight="@+id/buttonUnRegisterGPS"/>
 
 </RelativeLayout>

@@ -142,15 +142,21 @@ public class MainActivity extends Activity implements OnClickListener
                         //接收消息计数加1
                         bunblecount++;
                         Bundle bundle = msg.getData();
+//
+//                        double longitude = bundle.getDouble("Longitude");// 经度
+//                        double latitude = bundle.getDouble("Latitude");// 纬度
+//
+//                        int count = bundle.getInt("SatelliteCount");
+//                        Log.d("handler", count + " " + longitude + " " + latitude);
+//                        longiduTextView.setText(String.valueOf(longitude));
+                        latiduteTextView.setText(String.valueOf(bundle.getString("timecount")));
+                        String str=bundle.getString("str");
+                        if(str!=null)
+                        {
+                            satalliteTextView.setText(str);
+                        }
 
-                        double longitude = bundle.getDouble("Longitude");// 经度
-                        double latitude = bundle.getDouble("Latitude");// 纬度
 
-                        int count = bundle.getInt("SatelliteCount");
-                        Log.d("handler", count + " " + longitude + " " + latitude);
-                        longiduTextView.setText(String.valueOf(longitude));
-                        latiduteTextView.setText(String.valueOf(latitude));
-                        satalliteTextView.setText(String.valueOf(count));
 
                         bundelTextView.setText(String.valueOf(bunblecount));
                         return true;
@@ -165,6 +171,7 @@ public class MainActivity extends Activity implements OnClickListener
 
             IntentFilter intentFilter = new IntentFilter(intentTag);
             receiverGPSLocationInfo = new ReceiverGPSLocationInfo(gpsHandler);
+
             registerReceiver(receiverGPSLocationInfo, intentFilter);
             Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
 
@@ -175,6 +182,7 @@ public class MainActivity extends Activity implements OnClickListener
     }
 
     //注销服务监听
+
     void UnRegister()
     {
         if (receiverGPSLocationInfo != null)
