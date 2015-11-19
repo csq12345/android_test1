@@ -32,7 +32,7 @@ public class ReceiverGPSLocationInfo extends BroadcastReceiver
 
         if (uiHandler != null)
         {
-
+            Log.d("ReceiverGPS", "接收到广播");
             Message msg = uiHandler.obtainMessage();
             Bundle bb = new Bundle();
             if (sss != null)
@@ -42,9 +42,15 @@ public class ReceiverGPSLocationInfo extends BroadcastReceiver
             bb.putString("timecount", s1);
             msg.setData(bb);
             uiHandler.sendMessage(msg);
+            Log.d("ReceiverGPS", "发送消息完成");
         }
 
 
     }
 
+
+    public void UnRegidit()
+    {
+        uiHandler = null;
+    }
 }

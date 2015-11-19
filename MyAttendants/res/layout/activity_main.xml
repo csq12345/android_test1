@@ -83,5 +83,11 @@
             android:text="Small Text"
             android:id="@+id/textViewBundelCount"
             android:layout_below="@+id/buttonUnRegisterGPS" android:layout_alignRight="@+id/buttonUnRegisterGPS"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText" android:layout_below="@+id/textViewBundelCount"
+            android:layout_marginTop="17dp" android:layout_alignLeft="@+id/buttonRegisterGPS"
+            android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

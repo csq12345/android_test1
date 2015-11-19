@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -86,6 +87,7 @@ public class MainActivity extends Activity implements OnClickListener
             break;
             case R.id.buttonRegisterGPS:// 注册gps
             {
+
                 Register();
             }
             break;
@@ -106,6 +108,8 @@ public class MainActivity extends Activity implements OnClickListener
         {
             Intent gpsIntent = new Intent(this, ListenGPSService.class);
 
+
+
             startService(gpsIntent);
 
             Toast.makeText(this, "服务启动", Toast.LENGTH_SHORT).show();
@@ -124,24 +128,28 @@ public class MainActivity extends Activity implements OnClickListener
     String intentTag = "com.cw.myattendants.service.ListenGPSService";
     Handler gpsHandler;
     ReceiverGPSLocationInfo receiverGPSLocationInfo;
-
+    Looper mainlooper;
     //注册服务
     void Register()
     {
+        Log.d("handler", "Register服务");
         if (receiverGPSLocationInfo == null)
         {
-            gpsHandler = new Handler(new Handler.Callback()
+            try
             {
-
-                @Override
-                public boolean handleMessage(Message msg)
+            mainlooper=   MainActivity.this.getMainLooper();
+                gpsHandler = new Handler(mainlooper,new Handler.Callback()
                 {
-                    try
+
+                    @Override
+                    public boolean handleMessage(Message msg)
                     {
-                        Log.d("handler", "接收到handler ");
-                        //接收消息计数加1
-                        bunblecount++;
-                        Bundle bundle = msg.getData();
+                        try
+                        {
+                            //接收消息计数加1
+                            bunblecount++;
+                            Bundle bundle = msg.getData();
+                            Log.d("handler", "获取到消息包");
 //
 //                        double longitude = bundle.getDouble("Longitude");// 经度
 //                        double latitude = bundle.getDouble("Latitude");// 纬度
@@ -149,25 +157,33 @@ public class MainActivity extends Activity implements OnClickListener
 //                        int count = bundle.getInt("SatelliteCount");
 //                        Log.d("handler", count + " " + longitude + " " + latitude);
 //                        longiduTextView.setText(String.valueOf(longitude));
-                        latiduteTextView.setText(String.valueOf(bundle.getString("timecount")));
-                        String str=bundle.getString("str");
-                        if(str!=null)
+                            longiduTextView.setText(  bundle.getString("str"));
+
+                            latiduteTextView.setText(String.valueOf(bundle.getString("timecount")));
+                            String str=bundle.getString("str");
+                            if(str!=null)
+                            {
+                                satalliteTextView.setText(str);
+                            }
+
+
+
+                            bundelTextView.setText(String.valueOf(bunblecount));
+                            return true;
+                        } catch (Exception ex)
                         {
-                            satalliteTextView.setText(str);
+                            Log.d("handler", ex.getMessage());
+                            return false;
                         }
 
-
-
-                        bundelTextView.setText(String.valueOf(bunblecount));
-                        return true;
-                    } catch (Exception ex)
-                    {
-                        Log.d("handler", ex.getMessage());
-                        return false;
                     }
+                });
+            }
+            catch(Exception ex)
+            {
+                Log.d("handler", "gpsHandler "+ex.getMessage());
+            }
 
-                }
-            });
 
             IntentFilter intentFilter = new IntentFilter(intentTag);
             receiverGPSLocationInfo = new ReceiverGPSLocationInfo(gpsHandler);
@@ -185,13 +201,14 @@ public class MainActivity extends Activity implements OnClickListener
 
     void UnRegister()
     {
+        Log.d("handler", "UnRegister服务");
         if (receiverGPSLocationInfo != null)
         {
+            receiverGPSLocationInfo.UnRegidit();
             unregisterReceiver(receiverGPSLocationInfo);
             receiverGPSLocationInfo = null;
             Toast.makeText(this, "注销成功", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     // /]

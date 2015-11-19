@@ -29,7 +29,7 @@ public class ListenGPSService extends Service
 	@Override
 	public void onCreate()
 	{
-		// TODO Auto-generated method stub
+		Log.d("ListenGPSService", "onCreate");
 		if (locationManager == null)
 		{
 			locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);//获取定位服务
@@ -52,8 +52,8 @@ int tcount=0;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		// TODO Auto-generated method stub
 
+		Log.d("ListenGPSService", "onStartCommand");
 		Thread t=new Thread(new Runnable()
 		{
 			@Override
@@ -89,7 +89,7 @@ int tcount=0;
 	@Override
 	public void onDestroy()
 	{
-		// TODO Auto-generated method stub
+		Log.d("ListenGPSService", "onDestroy");
 		//销毁向定位服务注册的监听
 		if (locationManager != null)
 		{
@@ -146,8 +146,9 @@ int tcount=0;
 
 		@Override
 		public void onProviderDisabled(String provider)
+
 		{
-			Log.d("handler", "onProviderDisabled");
+			Log.d("ListenGPSService", "onProviderDisabled");
 		}
 	}
 
@@ -158,7 +159,7 @@ int tcount=0;
 		@Override
 		public void onGpsStatusChanged(int event)
 		{
-			Log.d("handler", "onGpsStatusChanged");
+			Log.d("ListenGPSService", "onGpsStatusChanged");
 			// TODO Auto-generated method stub
 			GpsStatus gpsStatus = locationManager.getGpsStatus(null);
 			Iterator<GpsSatellite> gpsIterable = gpsStatus.getSatellites()
