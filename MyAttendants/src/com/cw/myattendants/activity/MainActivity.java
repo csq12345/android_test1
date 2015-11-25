@@ -5,10 +5,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,7 +106,6 @@ public class MainActivity extends Activity implements OnClickListener
             Intent gpsIntent = new Intent(this, ListenGPSService.class);
 
 
-
             startService(gpsIntent);
 
             Toast.makeText(this, "服务启动", Toast.LENGTH_SHORT).show();
@@ -129,6 +125,8 @@ public class MainActivity extends Activity implements OnClickListener
     Handler gpsHandler;
     ReceiverGPSLocationInfo receiverGPSLocationInfo;
     Looper mainlooper;
+    Handler mainHandel;
+
     //注册服务
     void Register()
     {
@@ -137,10 +135,33 @@ public class MainActivity extends Activity implements OnClickListener
         {
             try
             {
-            mainlooper=   MainActivity.this.getMainLooper();
-                gpsHandler = new Handler(mainlooper,new Handler.Callback()
+
+                HandlerThread handlerThread = new HandlerThread("mainht");
+                handlerThread.start();
+                mainlooper = handlerThread.getLooper();
+
+
+                gpsHandler = new Handler(mainlooper, new Handler.Callback()
                 {
 
+                    @Override
+                    public boolean handleMessage(Message msg)
+                    {
+                        Bundle b1 = msg.getData();
+
+                        Message sendm = mainHandel.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("timecount", b1.getString("timecount1"));
+                        bundle.putString("gpsstr", b1.getString("gpsstr1"));
+                        sendm.setData(bundle);
+                        mainHandel.sendMessage(sendm);
+                        return true;
+                    }
+                });
+
+
+                mainHandel = new Handler(new Handler.Callback()
+                {
                     @Override
                     public boolean handleMessage(Message msg)
                     {
@@ -157,15 +178,15 @@ public class MainActivity extends Activity implements OnClickListener
 //                        int count = bundle.getInt("SatelliteCount");
 //                        Log.d("handler", count + " " + longitude + " " + latitude);
 //                        longiduTextView.setText(String.valueOf(longitude));
-                            longiduTextView.setText(  bundle.getString("str"));
+
 
                             latiduteTextView.setText(String.valueOf(bundle.getString("timecount")));
-                            String str=bundle.getString("str");
-                            if(str!=null)
-                            {
-                                satalliteTextView.setText(str);
-                            }
 
+                            String gpsstr = bundle.getString("gpsstr");
+                            if (gpsstr != null)
+                            {
+                                longiduTextView.setText(gpsstr);
+                            }
 
 
                             bundelTextView.setText(String.valueOf(bunblecount));
@@ -175,13 +196,12 @@ public class MainActivity extends Activity implements OnClickListener
                             Log.d("handler", ex.getMessage());
                             return false;
                         }
-
                     }
                 });
-            }
-            catch(Exception ex)
+
+            } catch (Exception ex)
             {
-                Log.d("handler", "gpsHandler "+ex.getMessage());
+                Log.d("handler", "gpsHandler " + ex.getMessage());
             }
 
 
