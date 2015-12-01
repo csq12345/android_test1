@@ -24,25 +24,29 @@ public class ReceiverGPSLocationInfo extends BroadcastReceiver
         // TODO Auto-generated method stub
         String s1 = intent.getStringExtra("timecount");
 
-        String sss = intent.getStringExtra("gpsbundle");
-        if (sss != null)
+        String gpsstr = intent.getStringExtra("gpsbundle");
+        if (gpsstr != null)
         {
-            Log.d("ReceiverGPS", sss);
+            Log.d("ReceiverGPS", gpsstr);
         }
 
         if (uiHandler != null)
         {
+
+
             Log.d("ReceiverGPS", "接收到广播");
             Message msg = uiHandler.obtainMessage();
             Bundle bb = new Bundle();
-            if (sss != null)
+            if (gpsstr != null)
             {
-                bb.putString("str", sss);
+                bb.putString("gpsstr1", gpsstr);
             }
-            bb.putString("timecount", s1);
+            bb.putString("timecount1", s1);
             msg.setData(bb);
             uiHandler.sendMessage(msg);
             Log.d("ReceiverGPS", "发送消息完成");
+
+
         }
 
 
